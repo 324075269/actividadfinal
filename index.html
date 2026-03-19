@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Repaso interactivo · Emociones y gestión</title>
+    <!-- Font Awesome 6 (para iconos decorativos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #eef2f7;
+            color: #1e2b3c;
+            font-size: 18px;
+            line-height: 1.5;
+            padding: 1rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 12px 28px -8px #1e3a5f60;
+        }
+
+        /* === ENCABEZADO CON LOGOS === */
+        .header-logos {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #b5c7dd;
+        }
+        .logos-left, .logos-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .logos-left img, .logos-right img {
+            height: 55px;
+            width: auto;
+            background: transparent;
+        }
+        @media (max-width: 600px) {
+            .logos-left img, .logos-right img {
+                height: 40px;
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin: 0.5rem 0 0.2rem;
+        }
+        .subtitulo {
+            font-size: 1.2rem;
+            color: #2b4a72;
+            margin-bottom: 2rem;
+            border-left: 6px solid #ffb347;
+            padding-left: 1rem;
+        }
+
+        /* === TARJETA DE PREGUNTA === */
+        .pregunta-card {
+            background: #f8fafd;
+            border: 2px solid #b9cee8;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 6px 12px rgba(0,30,60,0.08);
+        }
+        .pregunta-titulo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .pregunta-titulo i {
+            font-size: 2rem;
+            color: #1e3a5f;
+            background: #e5ecf5;
+            padding: 0.8rem;
+            border-radius: 50%;
+        }
+        .pregunta-titulo h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1e3a5f;
+        }
+        .opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+        .opcion {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: white;
+            border: 2px solid #d5e0f0;
+            border-radius: 2rem;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .opcion:hover {
+            background: #e5f0ff;
+            border-color: #1e3a5f;
+        }
+        .opcion input[type="radio"] {
+            width: 1.3rem;
+            height: 1.3rem;
+            accent-color: #1e3a5f;
+            cursor: pointer;
+        }
+        .opcion label {
+            font-size: 1.1rem;
+            font-weight: 500;
+            width: 100%;
+            cursor: pointer;
+        }
+        .feedback {
+            margin-top: 0.8rem;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            font-weight: 500;
+            display: none;
+        }
+        .feedback.correcto {
+            background: #d9eeda;
+            color: #1f7042;
+            border-left: 6px solid #2f7d4f;
+        }
+        .feedback.incorrecto {
+            background: #f5d8d5;
+            color: #a11;
+            border-left: 6px solid #b33126;
+        }
+
+        /* === BOTONES === */
+        .btn {
+            background: #1e3a5f;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 0 #0f2a3f;
+            margin: 1rem 0.5rem 1rem 0;
+        }
+        .btn:hover {
+            background: #ffb347;
+            color: #1e3a5f;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #b17f2e;
+        }
+        .btn-secondary {
+            background: #ffffff;
+            color: #1e3a5f;
+            border: 3px solid #1e3a5f;
+            box-shadow: none;
+        }
+        .btn-secondary:hover {
+            background: #e5ecf5;
+            color: #1e3a5f;
+        }
+
+        /* === RESULTADO FINAL === */
+        .resultado-final {
+            background: #1e3a5f;
+            color: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0 1rem;
+        }
+        .resultado-final h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .puntaje {
+            font-size: 4rem;
+            font-weight: 800;
+            background: #ffb347;
+            color: #1e3a5f;
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            border-radius: 60px;
+            margin: 1rem 0;
+        }
+
+        /* === FOOTER === */
+        .footer-enp2 {
+            margin-top: 2rem;
+            border-top: 3px solid #b5c7dd;
+            padding: 1.5rem 0.5rem 0.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .footer-logo img {
+            height: 45px;
+            width: auto;
+        }
+        .footer-texto {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1e3a5f;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            .pregunta-titulo h3 { font-size: 1.3rem; }
+            .opcion label { font-size: 1rem; }
+            .btn { width: 100%; margin: 0.5rem 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Encabezado con logos UNAM y Prepa2 -->
+    <div class="header-logos">
+        <div class="logos-left">
+            <img src="LOGOUNAM.png" alt="Logo UNAM" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+            <span style="display:none; font-size:1.5rem; background:#eee; padding:0.3rem 1rem;">[UNAM]</span>
+            <img src="LOGOPREPA2.png" alt="Logo Prepa 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+            <span style="display:none; font-size:1.5rem; background:#eee; padding:0.3rem 1rem;">[Prepa 2]</span>
+        </div>
+        <div class="logos-right">
+            <img src="LOGOENP2.png" alt="Logo ENP2" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" style="height:45px;">
+            <span style="display:none; font-size:1.5rem; background:#eee; padding:0.3rem 1rem;">[ENP2]</span>
+        </div>
+    </div>
+
+    <h1>🧠 Repaso: Emociones y gestión</h1>
+    <div class="subtitulo">
+        <i class="fas fa-question-circle"></i> Selecciona la opción correcta para cada tema. Al final obtendrás tu puntuación.
+    </div>
+
+    <!-- Preguntas (una por tema, T2 a T9) -->
+    <form id="quizForm">
+        <!-- T2: Definición de emoción -->
+        <div class="pregunta-card" id="p2">
+            <div class="pregunta-titulo">
+                <i class="fas fa-book-open"></i>
+                <h3>T2 · Definición de emoción</h3>
+            </div>
+            <p><strong>¿Qué describe mejor una emoción desde la psicología?</strong></p>
+            <div class="opciones">
+                <div class="opcion" onclick="seleccionar('p2', 'a')">
+                    <input type="radio" name="p2" id="p2a" value="a" onclick="event.stopPropagation()">
+                    <label for="p2a">Un proceso complejo que incluye respuestas fisiológicas, cognitivas y conductuales ante un estímulo relevante.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p2', 'b')">
+                    <input type="radio" name="p2" id="p2b" value="b" onclick="event.stopPropagation()">
+                    <label for="p2b">Una reacción automática sin interpretación mental.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p2', 'c')">
+                    <input type="radio" name="p2" id="p2c" value="c" onclick="event.stopPropagation()">
+                    <label for="p2c">Únicamente cambios fisiológicos como el ritmo cardíaco.</label>
+                </div>
+            </div>
+            <div id="fb-p2" class="feedback"></div>
+        </div>
+
+        <!-- T3: Perspectivas psicológicas -->
+        <div class="pregunta-card" id="p3">
+            <div class="pregunta-titulo">
+                <i class="fas fa-eye"></i>
+                <h3>T3 · Perspectivas psicológicas</h3>
+            </div>
+            <p><strong>¿Cuál de estas es una perspectiva sobre las emociones?</strong></p>
+            <div class="opciones">
+                <div class="opcion" onclick="seleccionar('p3', 'a')">
+                    <input type="radio" name="p3" id="p3a" value="a" onclick="event.stopPropagation()">
+                    <label for="p3a">Conductual, cognitiva, psicodinámica, humanista, neurociencias, sociocultural.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p3', 'b')">
+                    <input type="radio" name="p3" id="p3b" value="b" onclick="event.stopPropagation()">
+                    <label for="p3b">Solo conductual y cognitiva.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p3', 'c')">
+                    <input type="radio" name="p3" id="p3c" value="c" onclick="event.stopPropagation()">
+                    <label for="p3c">Exclusivamente biológica y fisiológica.</label>
+                </div>
+            </div>
+            <div id="fb-p3" class="feedback"></div>
+        </div>
+
+        <!-- T4: Bases biológicas -->
+        <div class="pregunta-card" id="p4">
+            <div class="pregunta-titulo">
+                <i class="fas fa-dna"></i>
+                <h3>T4 · Bases biológicas</h3>
+            </div>
+            <p><strong>¿Qué estructura cerebral es clave en el procesamiento de las emociones?</strong></p>
+            <div class="opciones">
+                <div class="opcion" onclick="seleccionar('p4', 'a')">
+                    <input type="radio" name="p4" id="p4a" value="a" onclick="event.stopPropagation()">
+                    <label for="p4a">Sistema límbico (amígdala, hipocampo, corteza prefrontal).</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p4', 'b')">
+                    <input type="radio" name="p4" id="p4b" value="b" onclick="event.stopPropagation()">
+                    <label for="p4b">Cerebelo exclusivamente.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p4', 'c')">
+                    <input type="radio" name="p4" id="p4c" value="c" onclick="event.stopPropagation()">
+                    <label for="p4c">Médula espinal.</label>
+                </div>
+            </div>
+            <div id="fb-p4" class="feedback"></div>
+        </div>
+
+        <!-- T5: Procesos psicológicos relacionados -->
+        <div class="pregunta-card" id="p5">
+            <div class="pregunta-titulo">
+                <i class="fas fa-brain"></i>
+                <h3>T5 · Procesos psicológicos</h3>
+            </div>
+            <p><strong>¿Qué procesos se relacionan directamente con las emociones?</strong></p>
+            <div class="opciones">
+                <div class="opcion" onclick="seleccionar('p5', 'a')">
+                    <input type="radio" name="p5" id="p5a" value="a" onclick="event.stopPropagation()">
+                    <label for="p5a">Atención, percepción, aprendizaje, memoria, motivación.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p5', 'b')">
+                    <input type="radio" name="p5" id="p5b" value="b" onclick="event.stopPropagation()">
+                    <label for="p5b">Solo la memoria y el lenguaje.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p5', 'c')">
+                    <input type="radio" name="p5" id="p5c" value="c" onclick="event.stopPropagation()">
+                    <label for="p5c">Únicamente la atención.</label>
+                </div>
+            </div>
+            <div id="fb-p5" class="feedback"></div>
+        </div>
+
+        <!-- T6: Funciones de las emociones -->
+        <div class="pregunta-card" id="p6">
+            <div class="pregunta-titulo">
+                <i class="fas fa-table"></i>
+                <h3>T6 · Funciones de las emociones</h3>
+            </div>
+            <p><strong>¿Cuáles son funciones de las emociones?</strong></p>
+            <div class="opciones">
+                <div class="opcion" onclick="seleccionar('p6', 'a')">
+                    <input type="radio" name="p6" id="p6a" value="a" onclick="event.stopPropagation()">
+                    <label for="p6a">Adaptativa, motivacional, cognitiva, social.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p6', 'b')">
+                    <input type="radio" name="p6" id="p6b" value="b" onclick="event.stopPropagation()">
+                    <label for="p6b">Solo adaptativa y social.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p6', 'c')">
+                    <input type="radio" name="p6" id="p6c" value="c" onclick="event.stopPropagation()">
+                    <label for="p6c">Exclusivamente cognitiva.</label>
+                </div>
+            </div>
+            <div id="fb-p6" class="feedback"></div>
+        </div>
+
+        <!-- T7: Gestión emocional (Goleman + GROP) -->
+        <div class="pregunta-card" id="p7">
+            <div class="pregunta-titulo">
+                <i class="fas fa-balance-scale"></i>
+                <h3>T7 · Gestión emocional</h3>
+            </div>
+            <p><strong>¿Qué técnica de comunicación asertiva propone el modelo NEMO?</strong></p>
+            <div class="opciones">
+                <div class="opcion" onclick="seleccionar('p7', 'a')">
+                    <input type="radio" name="p7" id="p7a" value="a" onclick="event.stopPropagation()">
+                    <label for="p7a">Nombre + Emoción + Motivo + Objetivo.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p7', 'b')">
+                    <input type="radio" name="p7" id="p7b" value="b" onclick="event.stopPropagation()">
+                    <label for="p7b">Gritar para que te escuchen.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p7', 'c')">
+                    <input type="radio" name="p7" id="p7c" value="c" onclick="event.stopPropagation()">
+                    <label for="p7c">Ignorar el conflicto.</label>
+                </div>
+            </div>
+            <div id="fb-p7" class="feedback"></div>
+        </div>
+
+        <!-- T8: Dimensión social -->
+        <div class="pregunta-card" id="p8">
+            <div class="pregunta-titulo">
+                <i class="fas fa-users"></i>
+                <h3>T8 · Dimensión social</h3>
+            </div>
+            <p><strong>¿Cómo influyen las redes sociales en las emociones?</strong></p>
+            <div class="opciones">
+                <div class="opcion" onclick="seleccionar('p8', 'a')">
+                    <input type="radio" name="p8" id="p8a" value="a" onclick="event.stopPropagation()">
+                    <label for="p8a">A través de la validación social (likes, comentarios) y la comparación social.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p8', 'b')">
+                    <input type="radio" name="p8" id="p8b" value="b" onclick="event.stopPropagation()">
+                    <label for="p8b">No tienen ningún efecto.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p8', 'c')">
+                    <input type="radio" name="p8" id="p8c" value="c" onclick="event.stopPropagation()">
+                    <label for="p8c">Solo afectan la autoestima negativamente.</label>
+                </div>
+            </div>
+            <div id="fb-p8" class="feedback"></div>
+        </div>
+
+        <!-- T9: Aplicaciones prácticas -->
+        <div class="pregunta-card" id="p9">
+            <div class="pregunta-titulo">
+                <i class="fas fa-hand-holding-heart"></i>
+                <h3>T9 · Aplicaciones prácticas</h3>
+            </div>
+            <p><strong>¿En qué áreas se aplica la educación emocional?</strong></p>
+            <div class="opciones">
+                <div class="opcion" onclick="seleccionar('p9', 'a')">
+                    <input type="radio" name="p9" id="p9a" value="a" onclick="event.stopPropagation()">
+                    <label for="p9a">Educación, salud mental, relaciones interpersonales, psicología clínica.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p9', 'b')">
+                    <input type="radio" name="p9" id="p9b" value="b" onclick="event.stopPropagation()">
+                    <label for="p9b">Solo en la escuela.</label>
+                </div>
+                <div class="opcion" onclick="seleccionar('p9', 'c')">
+                    <input type="radio" name="p9" id="p9c" value="c" onclick="event.stopPropagation()">
+                    <label for="p9c">Únicamente en terapia clínica.</label>
+                </div>
+            </div>
+            <div id="fb-p9" class="feedback"></div>
+        </div>
+
+        <!-- Botones -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+            <button type="button" class="btn" onclick="calcularPuntaje()">Ver puntaje</button>
+            <button type="button" class="btn btn-secondary" onclick="reiniciarQuiz()">Reintentar</button>
+        </div>
+    </form>
+
+    <!-- Resultado final (oculto inicialmente) -->
+    <div id="resultado" class="resultado-final" style="display: none;">
+        <h2>🎯 Tu puntuación</h2>
+        <div id="puntajeDisplay" class="puntaje">0/8</div>
+        <p id="mensajeResultado" style="font-size: 1.3rem;">Sigue practicando, ¡tú puedes!</p>
+    </div>
+
+    <!-- Footer con crédito -->
+    <div class="footer-enp2">
+        <div class="footer-logo">
+            <img src="LOGOENP2.png" alt="Logo ENP2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span style="display:none; font-size:1.5rem; background:#eee; padding:0.3rem 1rem;">[ENP2]</span>
+            <span class="footer-texto"><i class="fas fa-school"></i> Sitio creado por Ian Alexander Huidobro Castellanos</span>
+        </div>
+        <div class="footer-texto">
+            <i class="fas fa-calendar-alt"></i> 2026 · repaso interactivo
+        </div>
+    </div>
+</div>
+
+<script>
+    // Respuestas correctas (por id de pregunta)
+    const respuestas = {
+        p2: 'a',
+        p3: 'a',
+        p4: 'a',
+        p5: 'a',
+        p6: 'a',
+        p7: 'a',
+        p8: 'a',
+        p9: 'a'
+    };
+
+    // Función para seleccionar una opción y mostrar feedback inmediato
+    function seleccionar(preguntaId, valor) {
+        // Marcar el radio button correspondiente
+        document.getElementById(preguntaId + valor).checked = true;
+        
+        // Mostrar feedback
+        mostrarFeedback(preguntaId, valor);
+    }
+
+    function mostrarFeedback(preguntaId, valor) {
+        let fbDiv = document.getElementById('fb-' + preguntaId);
+        let correcta = respuestas[preguntaId];
+        if (valor === correcta) {
+            fbDiv.className = 'feedback correcto';
+            fbDiv.innerHTML = '✅ ¡Correcto!';
+        } else {
+            fbDiv.className = 'feedback incorrecto';
+            fbDiv.innerHTML = '❌ Incorrecto. Vuelve a intentarlo.';
+        }
+        fbDiv.style.display = 'block';
+    }
+
+    // Calcular puntaje final
+    function calcularPuntaje() {
+        let puntaje = 0;
+        let total = Object.keys(respuestas).length;
+
+        for (let pregunta in respuestas) {
+            let radios = document.getElementsByName(pregunta);
+            let seleccionada = null;
+            for (let radio of radios) {
+                if (radio.checked) {
+                    seleccionada = radio.value;
+                    break;
+                }
+            }
+            if (seleccionada && seleccionada === respuestas[pregunta]) {
+                puntaje++;
+            }
+            // Mostrar feedback de cada pregunta sin esperar a que se haya hecho clic
+            if (seleccionada) {
+                mostrarFeedback(pregunta, seleccionada);
+            } else {
+                // Si no hay selección, mostrar feedback de advertencia (opcional)
+                let fbDiv = document.getElementById('fb-' + pregunta);
+                fbDiv.className = 'feedback incorrecto';
+                fbDiv.innerHTML = '⚠️ No has respondido esta pregunta.';
+                fbDiv.style.display = 'block';
+            }
+        }
+
+        // Mostrar resultado final
+        let resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.style.display = 'block';
+        document.getElementById('puntajeDisplay').innerText = puntaje + '/' + total;
+        let mensaje = '';
+        if (puntaje === total) {
+            mensaje = '¡Excelente! Dominas todos los temas.';
+        } else if (puntaje >= 6) {
+            mensaje = '¡Muy bien! Repasa los temas que fallaste.';
+        } else {
+            mensaje = 'Sigue practicando, vuelve a intentarlo.';
+        }
+        document.getElementById('mensajeResultado').innerText = mensaje;
+    }
+
+    // Reiniciar todo
+    function reiniciarQuiz() {
+        // Deseleccionar todos los radios
+        let radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => r.checked = false);
+        // Ocultar todos los feedbacks
+        let feedbacks = document.querySelectorAll('.feedback');
+        feedbacks.forEach(f => f.style.display = 'none');
+        // Ocultar resultado
+        document.getElementById('resultado').style.display = 'none';
+    }
+</script>
+</body>
+</html>
