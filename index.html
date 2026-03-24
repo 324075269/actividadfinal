@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Repaso interactivo · Emociones y gestión · Ranking</title>
+    <title>Repaso interactivo · Emociones y gestión</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -27,7 +27,7 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 900px;
             width: 100%;
             margin: 0 auto;
             background: #ffffff;
@@ -76,42 +76,20 @@
             padding-left: 1rem;
         }
 
-        /* === ÁREA DE USUARIO Y CRONOMETRO === */
-        .user-area {
-            background: #e5ecf5;
-            border-radius: 1.5rem;
-            padding: 1rem 1.5rem;
-            margin-bottom: 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-        .user-input {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-        }
-        .user-input label {
-            font-weight: 600;
-        }
-        .user-input input {
-            padding: 0.6rem 1rem;
-            border: 2px solid #b9cee8;
-            border-radius: 2rem;
-            font-size: 1rem;
-            width: 180px;
-        }
-        .cronometro {
+        /* === CRONOMETRO === */
+        .cronometro-box {
             background: #1e3a5f;
             color: white;
-            padding: 0.5rem 1.2rem;
             border-radius: 2rem;
+            padding: 0.8rem 1.5rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+        .cronometro {
+            font-size: 2rem;
             font-weight: 700;
-            font-size: 1.4rem;
             font-family: monospace;
+            letter-spacing: 2px;
         }
 
         /* === TARJETA DE PREGUNTA === */
@@ -222,33 +200,6 @@
             background: #e5ecf5;
         }
 
-        /* === RANKING === */
-        .ranking-box {
-            background: #ffffff;
-            border: 2px solid #ffb347;
-            border-radius: 1.8rem;
-            padding: 1.5rem;
-            margin-top: 2rem;
-        }
-        .ranking-box h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: #1e3a5f;
-        }
-        .ranking-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .ranking-table th, .ranking-table td {
-            padding: 0.6rem;
-            text-align: left;
-            border-bottom: 1px solid #cedaea;
-        }
-        .ranking-table th {
-            background: #1e3a5f;
-            color: white;
-        }
-
         /* === RESULTADO FINAL === */
         .resultado-final {
             background: #1e3a5f;
@@ -267,6 +218,10 @@
             padding: 0.5rem 2rem;
             border-radius: 60px;
             margin: 1rem 0;
+        }
+        .tiempo-final {
+            font-size: 1.5rem;
+            margin-top: 1rem;
         }
 
         .footer-enp2 {
@@ -300,6 +255,7 @@
             .pregunta-titulo h3 { font-size: 1.3rem; }
             .opcion label { font-size: 1rem; }
             .btn { width: 100%; margin: 0.5rem 0; }
+            .cronometro { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -319,19 +275,15 @@
 
     <h1>📚 Repaso: Emociones y gestión</h1>
     <div class="subtitulo">
-        <i class="fas fa-question-circle"></i> Selecciona la opción correcta para cada tema. Al final, guarda tu puntaje y compite en el ranking.
+        <i class="fas fa-question-circle"></i> Selecciona la opción correcta para cada tema. Al final verás tu puntaje y el tiempo que tardaste.
     </div>
 
-    <!-- Área de usuario y cronómetro -->
-    <div class="user-area">
-        <div class="user-input">
-            <label><i class="fas fa-user"></i> Tu nombre:</label>
-            <input type="text" id="username" placeholder="Ingresa tu nombre" maxlength="20">
-        </div>
-        <div class="cronometro" id="cronometro">00:00</div>
+    <!-- Cronómetro visual -->
+    <div class="cronometro-box">
+        <i class="fas fa-stopwatch"></i> Tiempo: <span id="cronometro" class="cronometro">00:00</span>
     </div>
 
-    <!-- Formulario de preguntas -->
+    <!-- Preguntas (8 temas) -->
     <form id="quizForm">
         <!-- Tema 1 · Definición de emoción -->
         <div class="pregunta-card" id="p1">
@@ -526,8 +478,8 @@
         </div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
-            <button type="button" class="btn" onclick="finalizarQuiz()">Guardar puntaje y ver ranking</button>
-            <button type="button" class="btn btn-secondary" onclick="reiniciarCompleto()">Reiniciar quiz</button>
+            <button type="button" class="btn" onclick="finalizarQuiz()">Ver resultado</button>
+            <button type="button" class="btn btn-secondary" onclick="reiniciarQuiz()">Reiniciar</button>
         </div>
     </form>
 
@@ -535,30 +487,18 @@
     <div id="resultado" class="resultado-final" style="display: none;">
         <h2>🎯 Tu resultado</h2>
         <div id="puntajeDisplay" class="puntaje">0/8</div>
-        <p id="mensajeResultado" style="font-size: 1.3rem;"></p>
+        <div id="tiempoDisplay" class="tiempo-final"></div>
+        <p id="mensajeResultado" style="font-size: 1.3rem; margin-top: 1rem;"></p>
     </div>
 
-    <!-- Ranking -->
-    <div class="ranking-box">
-        <h3><i class="fas fa-trophy"></i> Top 10 · Mejores puntajes (primero aciertos, luego tiempo)</h3>
-        <table class="ranking-table" id="rankingTabla">
-            <thead>
-                <tr><th>Posición</th><th>Nombre</th><th>Aciertos / 8</th><th>Tiempo (s)</th></tr>
-            </thead>
-            <tbody id="rankingBody">
-                <tr><td colspan="4">Aún no hay registros. Completa el quiz para aparecer.</td></tr>
-            </tbody>
-        </table>
-        <p style="font-size:0.9rem; margin-top:1rem;">* Ranking local (solo en este navegador). Mejores puntajes se ordenan por aciertos y luego por menor tiempo.</p>
-    </div>
-
+    <!-- Footer -->
     <div class="footer-enp2">
         <div class="footer-logo">
             <img src="LOGOENP2.png" alt="Logo ENP2" onerror="this.style.display='none';">
             <span class="footer-texto"><i class="fas fa-school"></i> Sitio creado por Ian Alexander Huidobro Castellanos</span>
         </div>
         <div class="footer-texto">
-            <i class="fas fa-calendar-alt"></i> 2026 · repaso interactivo con ranking
+            <i class="fas fa-calendar-alt"></i> 2026 · repaso interactivo
         </div>
     </div>
 </div>
@@ -583,13 +523,13 @@
     let quizFinalizado = false;
 
     // Elementos
-    const cronoDiv = document.getElementById('cronometro');
-    const usernameInput = document.getElementById('username');
+    const cronoElement = document.getElementById('cronometro');
     const resultadoDiv = document.getElementById('resultado');
     const puntajeDisplay = document.getElementById('puntajeDisplay');
+    const tiempoDisplay = document.getElementById('tiempoDisplay');
     const mensajeResultado = document.getElementById('mensajeResultado');
 
-    // Iniciar cronómetro al cargar la página
+    // Iniciar cronómetro
     function iniciarCronometro() {
         if (timerInterval) clearInterval(timerInterval);
         startTime = Date.now();
@@ -602,12 +542,20 @@
         const elapsed = Math.floor((Date.now() - startTime) / 1000);
         const minutos = Math.floor(elapsed / 60);
         const segundos = elapsed % 60;
-        cronoDiv.textContent = `${minutos.toString().padStart(2,'0')}:${segundos.toString().padStart(2,'0')}`;
+        cronoElement.textContent = `${minutos.toString().padStart(2,'0')}:${segundos.toString().padStart(2,'0')}`;
     }
 
     function detenerCronometro() {
         if (timerInterval) clearInterval(timerInterval);
         timerInterval = null;
+    }
+
+    function getTiempoFormateado() {
+        if (!startTime) return "00:00";
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const minutos = Math.floor(elapsed / 60);
+        const segundos = elapsed % 60;
+        return `${minutos.toString().padStart(2,'0')}:${segundos.toString().padStart(2,'0')}`;
     }
 
     function getTiempoSegundos() {
@@ -617,6 +565,7 @@
 
     // Mostrar feedback al seleccionar
     function seleccionar(preguntaId, valor) {
+        if (quizFinalizado) return;
         document.getElementById(preguntaId + valor).checked = true;
         mostrarFeedback(preguntaId, valor);
     }
@@ -626,15 +575,15 @@
         let correcta = respuestas[preguntaId];
         if (valor === correcta) {
             fbDiv.className = 'feedback correcto';
-            fbDiv.innerHTML = '✅ ¡Correcto!';
+            fbDiv.innerHTML = '✅ Correcto';
         } else {
             fbDiv.className = 'feedback incorrecto';
-            fbDiv.innerHTML = '❌ Incorrecto. La respuesta correcta es otra.';
+            fbDiv.innerHTML = '❌ Incorrecto';
         }
         fbDiv.style.display = 'block';
     }
 
-    // Calcular puntaje y guardar en ranking
+    // Calcular puntaje
     function calcularPuntaje() {
         let puntaje = 0;
         for (let pregunta in respuestas) {
@@ -654,82 +603,40 @@
             } else {
                 let fbDiv = document.getElementById('fb-' + pregunta);
                 fbDiv.className = 'feedback incorrecto';
-                fbDiv.innerHTML = '⚠️ No has respondido esta pregunta.';
+                fbDiv.innerHTML = '⚠️ Sin responder';
                 fbDiv.style.display = 'block';
             }
         }
         return puntaje;
     }
 
-    // Guardar en localStorage y actualizar ranking
-    function guardarEnRanking(nombre, puntaje, tiempoSeg) {
-        let ranking = JSON.parse(localStorage.getItem('rankingEmociones')) || [];
-        ranking.push({ nombre: nombre.trim(), puntaje: puntaje, tiempo: tiempoSeg });
-        // Ordenar: primero por puntaje descendente, luego por tiempo ascendente
-        ranking.sort((a, b) => {
-            if (a.puntaje !== b.puntaje) return b.puntaje - a.puntaje;
-            return a.tiempo - b.tiempo;
-        });
-        // Conservar solo top 10
-        ranking = ranking.slice(0, 10);
-        localStorage.setItem('rankingEmociones', JSON.stringify(ranking));
-        mostrarRanking();
-    }
-
-    function mostrarRanking() {
-        const ranking = JSON.parse(localStorage.getItem('rankingEmociones')) || [];
-        const tbody = document.getElementById('rankingBody');
-        if (ranking.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4">Aún no hay registros. Completa el quiz para aparecer.</td></tr>';
-            return;
-        }
-        let html = '';
-        ranking.forEach((entry, idx) => {
-            html += `<tr>
-                        <td>${idx+1}</td>
-                        <td>${escapeHtml(entry.nombre)}</td>
-                        <td>${entry.puntaje}/${totalPreguntas}</td>
-                        <td>${entry.tiempo} s</td>
-                     </tr>`;
-        });
-        tbody.innerHTML = html;
-    }
-
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-
     // Finalizar quiz
     function finalizarQuiz() {
         if (quizFinalizado) return;
-        const nombre = usernameInput.value.trim();
-        if (nombre === "") {
-            alert("Por favor, ingresa tu nombre para guardar el puntaje.");
-            return;
-        }
         detenerCronometro();
         quizFinalizado = true;
+        
         const puntaje = calcularPuntaje();
-        const tiempoSeg = getTiempoSegundos();
-        guardarEnRanking(nombre, puntaje, tiempoSeg);
-        // Mostrar resultado
+        const tiempoFormateado = getTiempoFormateado();
+        const tiempoSegundos = getTiempoSegundos();
+        
         resultadoDiv.style.display = 'block';
         puntajeDisplay.innerText = `${puntaje}/${totalPreguntas}`;
+        tiempoDisplay.innerHTML = `<i class="fas fa-stopwatch"></i> Tiempo: ${tiempoFormateado} (${tiempoSegundos} segundos)`;
+        
         let mensaje = '';
-        if (puntaje === totalPreguntas) mensaje = '¡Excelente! Dominas todos los temas.';
-        else if (puntaje >= 6) mensaje = '¡Muy bien! Repasa los temas que fallaste.';
-        else mensaje = 'Sigue practicando, vuelve a intentarlo.';
+        if (puntaje === totalPreguntas) {
+            mensaje = '¡Excelente! Dominas todos los temas.';
+        } else if (puntaje >= 6) {
+            mensaje = '¡Muy bien! Repasa los temas que fallaste.';
+        } else {
+            mensaje = 'Sigue practicando, vuelve a intentarlo.';
+        }
         mensajeResultado.innerText = mensaje;
     }
 
-    // Reiniciar completamente (borrar respuestas, reiniciar tiempo, no borrar ranking)
-    function reiniciarCompleto() {
+    // Reiniciar todo
+    function reiniciarQuiz() {
         // Limpiar radios
         let radios = document.querySelectorAll('input[type="radio"]');
         radios.forEach(r => r.checked = false);
@@ -742,14 +649,11 @@
         detenerCronometro();
         iniciarCronometro();
         quizFinalizado = false;
-        // Mantener nombre (no se borra)
-        // Mantener ranking visible
     }
 
     // Inicializar al cargar
     window.onload = () => {
         iniciarCronometro();
-        mostrarRanking();
     };
 </script>
 </body>
