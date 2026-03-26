@@ -297,8 +297,12 @@
     <div class="ranking-box">
         <h3><i class="fas fa-trophy"></i> Ranking · Mejores puntajes (por aciertos y tiempo)</h3>
         <table class="ranking-table" id="rankingTabla">
-            <thead><tr><th>Posición</th><th>Nombre</th><th>Aciertos / 8</th><th>Tiempo (s)</th><th>Fecha</th></tr></thead>
-            <tbody id="rankingBody"><tr><td colspan="5">Cargando ranking...</td></tr></tbody>
+            <thead>
+                <tr><th>Posición</th><th>Nombre</th><th>Aciertos / 8</th><th>Tiempo (s)</th><th>Fecha</th></tr>
+            </thead>
+            <tbody id="rankingBody">
+                <tr><td colspan="5">Cargando ranking...</td></tr>
+            </tbody>
         </table>
         <p style="font-size:0.9rem; margin-top:1rem;">* Solo un intento por nombre. Si ya aparece tu nombre, no podrás registrar otro.</p>
     </div>
@@ -318,7 +322,6 @@
     const totalPreguntas = Object.keys(respuestas).length;
 
     let startTime = null, timerInterval = null, quizFinalizado = false;
-    let yaRegistrado = false;
 
     const cronoElement = document.getElementById('cronometro');
     const resultadoDiv = document.getElementById('resultado');
