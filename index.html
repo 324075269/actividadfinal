@@ -3,18 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Repaso interactivo · Emociones y gestión</title>
-    <!-- Font Awesome 6 -->
+    <title>Repaso interactivo · Emociones y gestión · Ranking</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             background: #eef2f7;
             color: #1e2b3c;
             font-size: 18px;
@@ -25,18 +19,14 @@
             align-items: center;
             justify-content: center;
         }
-
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             width: 100%;
-            margin: 0 auto;
             background: #ffffff;
             border-radius: 2rem;
             padding: 1.8rem 2rem;
             box-shadow: 0 12px 28px -8px #1e3a5f60;
         }
-
-        /* === ENCABEZADO CON LOGOS === */
         .header-logos {
             display: flex;
             flex-wrap: wrap;
@@ -53,21 +43,16 @@
             gap: 1rem;
             flex-wrap: wrap;
         }
-        .logos-left img, .logos-right img {
-            height: 55px;
-            width: auto;
-            background: transparent;
-        }
+        .logos-left img, .logos-right img { height: 55px; width: auto; }
         @media (max-width: 600px) {
             .logos-left img, .logos-right img { height: 40px; }
+            .container { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            .pregunta-titulo h3 { font-size: 1.3rem; }
+            .opcion label { font-size: 1rem; }
+            .btn { width: 100%; margin: 0.5rem 0; }
         }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #1e3a5f;
-            margin: 0.5rem 0 0.2rem;
-        }
+        h1 { font-size: 2.5rem; font-weight: 700; color: #1e3a5f; margin: 0.5rem 0 0.2rem; }
         .subtitulo {
             font-size: 1.2rem;
             color: #2b4a72;
@@ -75,8 +60,6 @@
             border-left: 6px solid #ffb347;
             padding-left: 1rem;
         }
-
-        /* === CRONOMETRO === */
         .cronometro-box {
             background: #1e3a5f;
             color: white;
@@ -85,14 +68,7 @@
             margin-bottom: 2rem;
             display: inline-block;
         }
-        .cronometro {
-            font-size: 2rem;
-            font-weight: 700;
-            font-family: monospace;
-            letter-spacing: 2px;
-        }
-
-        /* === TARJETA DE PREGUNTA === */
+        .cronometro { font-size: 2rem; font-weight: 700; font-family: monospace; }
         .pregunta-card {
             background: #f8fafd;
             border: 2px solid #b9cee8;
@@ -114,17 +90,8 @@
             padding: 0.8rem;
             border-radius: 50%;
         }
-        .pregunta-titulo h3 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #1e3a5f;
-        }
-        .opciones {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            margin: 1.2rem 0;
-        }
+        .pregunta-titulo h3 { font-size: 1.6rem; font-weight: 700; color: #1e3a5f; }
+        .opciones { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.2rem 0; }
         .opcion {
             display: flex;
             align-items: center;
@@ -136,22 +103,9 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .opcion:hover {
-            background: #e5f0ff;
-            border-color: #1e3a5f;
-        }
-        .opcion input[type="radio"] {
-            width: 1.3rem;
-            height: 1.3rem;
-            accent-color: #1e3a5f;
-            cursor: pointer;
-        }
-        .opcion label {
-            font-size: 1.1rem;
-            font-weight: 500;
-            width: 100%;
-            cursor: pointer;
-        }
+        .opcion:hover { background: #e5f0ff; border-color: #1e3a5f; }
+        .opcion input[type="radio"] { width: 1.3rem; height: 1.3rem; accent-color: #1e3a5f; cursor: pointer; }
+        .opcion label { font-size: 1.1rem; font-weight: 500; width: 100%; cursor: pointer; }
         .feedback {
             margin-top: 0.8rem;
             padding: 0.8rem;
@@ -159,18 +113,8 @@
             font-weight: 500;
             display: none;
         }
-        .feedback.correcto {
-            background: #d9eeda;
-            color: #1f7042;
-            border-left: 6px solid #2f7d4f;
-        }
-        .feedback.incorrecto {
-            background: #f5d8d5;
-            color: #a11;
-            border-left: 6px solid #b33126;
-        }
-
-        /* === BOTONES === */
+        .feedback.correcto { background: #d9eeda; color: #1f7042; border-left: 6px solid #2f7d4f; }
+        .feedback.incorrecto { background: #f5d8d5; color: #a11; border-left: 6px solid #b33126; }
         .btn {
             background: #1e3a5f;
             color: white;
@@ -184,23 +128,9 @@
             box-shadow: 0 4px 0 #0f2a3f;
             margin: 0.5rem;
         }
-        .btn:hover {
-            background: #ffb347;
-            color: #1e3a5f;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #b17f2e;
-        }
-        .btn-secondary {
-            background: #ffffff;
-            color: #1e3a5f;
-            border: 3px solid #1e3a5f;
-            box-shadow: none;
-        }
-        .btn-secondary:hover {
-            background: #e5ecf5;
-        }
-
-        /* === RESULTADO FINAL === */
+        .btn:hover { background: #ffb347; color: #1e3a5f; transform: translateY(-2px); box-shadow: 0 6px 0 #b17f2e; }
+        .btn-secondary { background: #ffffff; color: #1e3a5f; border: 3px solid #1e3a5f; box-shadow: none; }
+        .btn-secondary:hover { background: #e5ecf5; }
         .resultado-final {
             background: #1e3a5f;
             color: white;
@@ -219,11 +149,18 @@
             border-radius: 60px;
             margin: 1rem 0;
         }
-        .tiempo-final {
-            font-size: 1.5rem;
-            margin-top: 1rem;
+        .tiempo-final { font-size: 1.5rem; margin-top: 1rem; }
+        .ranking-box {
+            background: #ffffff;
+            border: 2px solid #ffb347;
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
         }
-
+        .ranking-box h3 { font-size: 1.8rem; margin-bottom: 1rem; color: #1e3a5f; }
+        .ranking-table { width: 100%; border-collapse: collapse; }
+        .ranking-table th, .ranking-table td { padding: 0.6rem; text-align: left; border-bottom: 1px solid #cedaea; }
+        .ranking-table th { background: #1e3a5f; color: white; }
         .footer-enp2 {
             margin-top: 2rem;
             border-top: 3px solid #b5c7dd;
@@ -234,256 +171,122 @@
             justify-content: space-between;
             gap: 1rem;
         }
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .footer-logo img {
-            height: 45px;
-            width: auto;
-        }
-        .footer-texto {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #1e3a5f;
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 1rem; }
-            h1 { font-size: 2rem; }
-            .pregunta-titulo h3 { font-size: 1.3rem; }
-            .opcion label { font-size: 1rem; }
-            .btn { width: 100%; margin: 0.5rem 0; }
-            .cronometro { font-size: 1.5rem; }
-        }
+        .footer-logo { display: flex; align-items: center; gap: 1rem; }
+        .footer-logo img { height: 45px; width: auto; }
+        .footer-texto { font-size: 1rem; font-weight: 500; color: #1e3a5f; }
     </style>
 </head>
 <body>
 <div class="container">
 
-    <!-- Encabezado con logos -->
     <div class="header-logos">
         <div class="logos-left">
             <img src="LOGOUNAM.png" alt="Logo UNAM" onerror="this.style.display='none';">
             <img src="LOGOPREPA2.png" alt="Logo Prepa 2" onerror="this.style.display='none';">
         </div>
         <div class="logos-right">
-            <img src="LOGOENP2.png" alt="Logo ENP2" onerror="this.style.display='none';" style="height:45px;">
+            <img src="LOGOENP2.png" alt="Logo ENP2" onerror="this.style.display='none';">
         </div>
     </div>
 
     <h1>📚 Repaso: Emociones y gestión</h1>
     <div class="subtitulo">
-        <i class="fas fa-question-circle"></i> Selecciona la opción correcta para cada tema. Al final verás tu puntaje y el tiempo que tardaste.
+        <i class="fas fa-question-circle"></i> Selecciona la opción correcta. Al final, ingresa tu nombre y guarda tu puntaje.
     </div>
 
-    <!-- Cronómetro visual -->
     <div class="cronometro-box">
         <i class="fas fa-stopwatch"></i> Tiempo: <span id="cronometro" class="cronometro">00:00</span>
     </div>
 
-    <!-- Preguntas (8 temas) -->
     <form id="quizForm">
-        <!-- Tema 1 · Definición de emoción -->
+        <!-- Preguntas (8 temas) -->
         <div class="pregunta-card" id="p1">
-            <div class="pregunta-titulo">
-                <i class="fas fa-book-open"></i>
-                <h3>Tema 1 · Definición de emoción</h3>
-            </div>
+            <div class="pregunta-titulo"><i class="fas fa-book-open"></i><h3>Tema 1 · Definición de emoción</h3></div>
             <p><strong>¿Qué describe mejor una emoción desde la psicología?</strong></p>
             <div class="opciones">
-                <div class="opcion" onclick="seleccionar('p1', 'a')">
-                    <input type="radio" name="p1" id="p1a" value="a" onclick="event.stopPropagation()">
-                    <label for="p1a">Un proceso complejo que incluye respuestas fisiológicas, cognitivas y conductuales ante un estímulo relevante.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p1', 'b')">
-                    <input type="radio" name="p1" id="p1b" value="b" onclick="event.stopPropagation()">
-                    <label for="p1b">Una reacción automática sin interpretación mental.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p1', 'c')">
-                    <input type="radio" name="p1" id="p1c" value="c" onclick="event.stopPropagation()">
-                    <label for="p1c">Únicamente cambios fisiológicos como el ritmo cardíaco.</label>
-                </div>
+                <div class="opcion" onclick="seleccionar('p1', 'a')"><input type="radio" name="p1" id="p1a" value="a"><label for="p1a">Un proceso complejo que incluye respuestas fisiológicas, cognitivas y conductuales ante un estímulo relevante.</label></div>
+                <div class="opcion" onclick="seleccionar('p1', 'b')"><input type="radio" name="p1" id="p1b" value="b"><label for="p1b">Una reacción automática sin interpretación mental.</label></div>
+                <div class="opcion" onclick="seleccionar('p1', 'c')"><input type="radio" name="p1" id="p1c" value="c"><label for="p1c">Únicamente cambios fisiológicos como el ritmo cardíaco.</label></div>
             </div>
             <div id="fb-p1" class="feedback"></div>
         </div>
-
-        <!-- Tema 2 · Perspectivas psicológicas -->
         <div class="pregunta-card" id="p2">
-            <div class="pregunta-titulo">
-                <i class="fas fa-eye"></i>
-                <h3>Tema 2 · Perspectivas psicológicas</h3>
-            </div>
+            <div class="pregunta-titulo"><i class="fas fa-eye"></i><h3>Tema 2 · Perspectivas psicológicas</h3></div>
             <p><strong>¿Cuál de las siguientes es una perspectiva reconocida sobre las emociones?</strong></p>
             <div class="opciones">
-                <div class="opcion" onclick="seleccionar('p2', 'a')">
-                    <input type="radio" name="p2" id="p2a" value="a" onclick="event.stopPropagation()">
-                    <label for="p2a">Solo conductual y cognitiva.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p2', 'b')">
-                    <input type="radio" name="p2" id="p2b" value="b" onclick="event.stopPropagation()">
-                    <label for="p2b">Conductual, cognitiva, psicodinámica, humanista, neurociencias y sociocultural.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p2', 'c')">
-                    <input type="radio" name="p2" id="p2c" value="c" onclick="event.stopPropagation()">
-                    <label for="p2c">Exclusivamente biológica y fisiológica.</label>
-                </div>
+                <div class="opcion" onclick="seleccionar('p2', 'a')"><input type="radio" name="p2" id="p2a" value="a"><label for="p2a">Solo conductual y cognitiva.</label></div>
+                <div class="opcion" onclick="seleccionar('p2', 'b')"><input type="radio" name="p2" id="p2b" value="b"><label for="p2b">Conductual, cognitiva, psicodinámica, humanista, neurociencias y sociocultural.</label></div>
+                <div class="opcion" onclick="seleccionar('p2', 'c')"><input type="radio" name="p2" id="p2c" value="c"><label for="p2c">Exclusivamente biológica y fisiológica.</label></div>
             </div>
             <div id="fb-p2" class="feedback"></div>
         </div>
-
-        <!-- Tema 3 · Bases biológicas -->
         <div class="pregunta-card" id="p3">
-            <div class="pregunta-titulo">
-                <i class="fas fa-dna"></i>
-                <h3>Tema 3 · Bases biológicas</h3>
-            </div>
+            <div class="pregunta-titulo"><i class="fas fa-dna"></i><h3>Tema 3 · Bases biológicas</h3></div>
             <p><strong>¿Qué estructura cerebral es clave en el procesamiento de las emociones?</strong></p>
             <div class="opciones">
-                <div class="opcion" onclick="seleccionar('p3', 'a')">
-                    <input type="radio" name="p3" id="p3a" value="a" onclick="event.stopPropagation()">
-                    <label for="p3a">Médula espinal y cerebelo.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p3', 'b')">
-                    <input type="radio" name="p3" id="p3b" value="b" onclick="event.stopPropagation()">
-                    <label for="p3b">Sistema límbico (amígdala, hipocampo, corteza prefrontal).</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p3', 'c')">
-                    <input type="radio" name="p3" id="p3c" value="c" onclick="event.stopPropagation()">
-                    <label for="p3c">Corteza motora y occipital.</label>
-                </div>
+                <div class="opcion" onclick="seleccionar('p3', 'a')"><input type="radio" name="p3" id="p3a" value="a"><label for="p3a">Médula espinal y cerebelo.</label></div>
+                <div class="opcion" onclick="seleccionar('p3', 'b')"><input type="radio" name="p3" id="p3b" value="b"><label for="p3b">Sistema límbico (amígdala, hipocampo, corteza prefrontal).</label></div>
+                <div class="opcion" onclick="seleccionar('p3', 'c')"><input type="radio" name="p3" id="p3c" value="c"><label for="p3c">Corteza motora y occipital.</label></div>
             </div>
             <div id="fb-p3" class="feedback"></div>
         </div>
-
-        <!-- Tema 4 · Procesos psicológicos relacionados -->
         <div class="pregunta-card" id="p4">
-            <div class="pregunta-titulo">
-                <i class="fas fa-brain"></i>
-                <h3>Tema 4 · Procesos psicológicos</h3>
-            </div>
+            <div class="pregunta-titulo"><i class="fas fa-brain"></i><h3>Tema 4 · Procesos psicológicos</h3></div>
             <p><strong>¿Qué procesos se relacionan directamente con las emociones?</strong></p>
             <div class="opciones">
-                <div class="opcion" onclick="seleccionar('p4', 'a')">
-                    <input type="radio" name="p4" id="p4a" value="a" onclick="event.stopPropagation()">
-                    <label for="p4a">Solo la memoria y el lenguaje.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p4', 'b')">
-                    <input type="radio" name="p4" id="p4b" value="b" onclick="event.stopPropagation()">
-                    <label for="p4b">Únicamente la atención y la percepción.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p4', 'c')">
-                    <input type="radio" name="p4" id="p4c" value="c" onclick="event.stopPropagation()">
-                    <label for="p4c">Atención, percepción, aprendizaje, memoria y motivación.</label>
-                </div>
+                <div class="opcion" onclick="seleccionar('p4', 'a')"><input type="radio" name="p4" id="p4a" value="a"><label for="p4a">Solo la memoria y el lenguaje.</label></div>
+                <div class="opcion" onclick="seleccionar('p4', 'b')"><input type="radio" name="p4" id="p4b" value="b"><label for="p4b">Únicamente la atención y la percepción.</label></div>
+                <div class="opcion" onclick="seleccionar('p4', 'c')"><input type="radio" name="p4" id="p4c" value="c"><label for="p4c">Atención, percepción, aprendizaje, memoria y motivación.</label></div>
             </div>
             <div id="fb-p4" class="feedback"></div>
         </div>
-
-        <!-- Tema 5 · Funciones de las emociones -->
         <div class="pregunta-card" id="p5">
-            <div class="pregunta-titulo">
-                <i class="fas fa-table"></i>
-                <h3>Tema 5 · Funciones de las emociones</h3>
-            </div>
+            <div class="pregunta-titulo"><i class="fas fa-table"></i><h3>Tema 5 · Funciones de las emociones</h3></div>
             <p><strong>¿Cuáles son las funciones principales de las emociones?</strong></p>
             <div class="opciones">
-                <div class="opcion" onclick="seleccionar('p5', 'a')">
-                    <input type="radio" name="p5" id="p5a" value="a" onclick="event.stopPropagation()">
-                    <label for="p5a">Adaptativa, motivacional, cognitiva y social.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p5', 'b')">
-                    <input type="radio" name="p5" id="p5b" value="b" onclick="event.stopPropagation()">
-                    <label for="p5b">Solo adaptativa y social.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p5', 'c')">
-                    <input type="radio" name="p5" id="p5c" value="c" onclick="event.stopPropagation()">
-                    <label for="p5c">Exclusivamente cognitiva y emocional.</label>
-                </div>
+                <div class="opcion" onclick="seleccionar('p5', 'a')"><input type="radio" name="p5" id="p5a" value="a"><label for="p5a">Adaptativa, motivacional, cognitiva y social.</label></div>
+                <div class="opcion" onclick="seleccionar('p5', 'b')"><input type="radio" name="p5" id="p5b" value="b"><label for="p5b">Solo adaptativa y social.</label></div>
+                <div class="opcion" onclick="seleccionar('p5', 'c')"><input type="radio" name="p5" id="p5c" value="c"><label for="p5c">Exclusivamente cognitiva y emocional.</label></div>
             </div>
             <div id="fb-p5" class="feedback"></div>
         </div>
-
-        <!-- Tema 6 · Gestión emocional (Goleman + GROP) -->
         <div class="pregunta-card" id="p6">
-            <div class="pregunta-titulo">
-                <i class="fas fa-balance-scale"></i>
-                <h3>Tema 6 · Gestión emocional</h3>
-            </div>
+            <div class="pregunta-titulo"><i class="fas fa-balance-scale"></i><h3>Tema 6 · Gestión emocional</h3></div>
             <p><strong>¿Qué técnica de comunicación asertiva propone el modelo NEMO?</strong></p>
             <div class="opciones">
-                <div class="opcion" onclick="seleccionar('p6', 'a')">
-                    <input type="radio" name="p6" id="p6a" value="a" onclick="event.stopPropagation()">
-                    <label for="p6a">Gritar para que te escuchen.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p6', 'b')">
-                    <input type="radio" name="p6" id="p6b" value="b" onclick="event.stopPropagation()">
-                    <label for="p6b">Nombre + Emoción + Motivo + Objetivo.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p6', 'c')">
-                    <input type="radio" name="p6" id="p6c" value="c" onclick="event.stopPropagation()">
-                    <label for="p6c">Ignorar el conflicto y esperar que se resuelva solo.</label>
-                </div>
+                <div class="opcion" onclick="seleccionar('p6', 'a')"><input type="radio" name="p6" id="p6a" value="a"><label for="p6a">Gritar para que te escuchen.</label></div>
+                <div class="opcion" onclick="seleccionar('p6', 'b')"><input type="radio" name="p6" id="p6b" value="b"><label for="p6b">Nombre + Emoción + Motivo + Objetivo.</label></div>
+                <div class="opcion" onclick="seleccionar('p6', 'c')"><input type="radio" name="p6" id="p6c" value="c"><label for="p6c">Ignorar el conflicto y esperar que se resuelva solo.</label></div>
             </div>
             <div id="fb-p6" class="feedback"></div>
         </div>
-
-        <!-- Tema 7 · Dimensión social -->
         <div class="pregunta-card" id="p7">
-            <div class="pregunta-titulo">
-                <i class="fas fa-users"></i>
-                <h3>Tema 7 · Dimensión social</h3>
-            </div>
+            <div class="pregunta-titulo"><i class="fas fa-users"></i><h3>Tema 7 · Dimensión social</h3></div>
             <p><strong>¿Cómo influyen las redes sociales en las emociones?</strong></p>
             <div class="opciones">
-                <div class="opcion" onclick="seleccionar('p7', 'a')">
-                    <input type="radio" name="p7" id="p7a" value="a" onclick="event.stopPropagation()">
-                    <label for="p7a">No tienen ningún efecto relevante.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p7', 'b')">
-                    <input type="radio" name="p7" id="p7b" value="b" onclick="event.stopPropagation()">
-                    <label for="p7b">Solo afectan la autoestima negativamente.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p7', 'c')">
-                    <input type="radio" name="p7" id="p7c" value="c" onclick="event.stopPropagation()">
-                    <label for="p7c">A través de la validación social (likes, comentarios) y la comparación social.</label>
-                </div>
+                <div class="opcion" onclick="seleccionar('p7', 'a')"><input type="radio" name="p7" id="p7a" value="a"><label for="p7a">No tienen ningún efecto relevante.</label></div>
+                <div class="opcion" onclick="seleccionar('p7', 'b')"><input type="radio" name="p7" id="p7b" value="b"><label for="p7b">Solo afectan la autoestima negativamente.</label></div>
+                <div class="opcion" onclick="seleccionar('p7', 'c')"><input type="radio" name="p7" id="p7c" value="c"><label for="p7c">A través de la validación social (likes, comentarios) y la comparación social.</label></div>
             </div>
             <div id="fb-p7" class="feedback"></div>
         </div>
-
-        <!-- Tema 8 · Aplicaciones prácticas -->
         <div class="pregunta-card" id="p8">
-            <div class="pregunta-titulo">
-                <i class="fas fa-hand-holding-heart"></i>
-                <h3>Tema 8 · Aplicaciones prácticas</h3>
-            </div>
+            <div class="pregunta-titulo"><i class="fas fa-hand-holding-heart"></i><h3>Tema 8 · Aplicaciones prácticas</h3></div>
             <p><strong>¿En qué áreas se aplica la educación emocional?</strong></p>
             <div class="opciones">
-                <div class="opcion" onclick="seleccionar('p8', 'a')">
-                    <input type="radio" name="p8" id="p8a" value="a" onclick="event.stopPropagation()">
-                    <label for="p8a">Solo en la escuela.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p8', 'b')">
-                    <input type="radio" name="p8" id="p8b" value="b" onclick="event.stopPropagation()">
-                    <label for="p8b">Educación, salud mental, relaciones interpersonales, psicología clínica.</label>
-                </div>
-                <div class="opcion" onclick="seleccionar('p8', 'c')">
-                    <input type="radio" name="p8" id="p8c" value="c" onclick="event.stopPropagation()">
-                    <label for="p8c">Únicamente en terapia clínica.</label>
-                </div>
+                <div class="opcion" onclick="seleccionar('p8', 'a')"><input type="radio" name="p8" id="p8a" value="a"><label for="p8a">Solo en la escuela.</label></div>
+                <div class="opcion" onclick="seleccionar('p8', 'b')"><input type="radio" name="p8" id="p8b" value="b"><label for="p8b">Educación, salud mental, relaciones interpersonales, psicología clínica.</label></div>
+                <div class="opcion" onclick="seleccionar('p8', 'c')"><input type="radio" name="p8" id="p8c" value="c"><label for="p8c">Únicamente en terapia clínica.</label></div>
             </div>
             <div id="fb-p8" class="feedback"></div>
         </div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
-            <button type="button" class="btn" onclick="finalizarQuiz()">Ver resultado</button>
-            <button type="button" class="btn btn-secondary" onclick="reiniciarQuiz()">Reiniciar</button>
+            <button type="button" class="btn" onclick="finalizarQuiz()">Guardar puntaje y ver ranking</button>
+            <button type="button" class="btn btn-secondary" onclick="reiniciarQuiz()">Reiniciar respuestas</button>
         </div>
     </form>
 
-    <!-- Resultado final -->
     <div id="resultado" class="resultado-final" style="display: none;">
         <h2>🎯 Tu resultado</h2>
         <div id="puntajeDisplay" class="puntaje">0/8</div>
@@ -491,58 +294,49 @@
         <p id="mensajeResultado" style="font-size: 1.3rem; margin-top: 1rem;"></p>
     </div>
 
-    <!-- Footer -->
+    <div class="ranking-box">
+        <h3><i class="fas fa-trophy"></i> Ranking · Mejores puntajes (por aciertos y tiempo)</h3>
+        <table class="ranking-table" id="rankingTabla">
+            <thead><tr><th>Posición</th><th>Nombre</th><th>Aciertos / 8</th><th>Tiempo (s)</th><th>Fecha</th></tr></thead>
+            <tbody id="rankingBody"><tr><td colspan="5">Cargando ranking...</td></tr></tbody>
+        </table>
+        <p style="font-size:0.9rem; margin-top:1rem;">* Solo un intento por nombre. Si ya aparece tu nombre, no podrás registrar otro.</p>
+    </div>
+
     <div class="footer-enp2">
         <div class="footer-logo">
             <img src="LOGOENP2.png" alt="Logo ENP2" onerror="this.style.display='none';">
             <span class="footer-texto"><i class="fas fa-school"></i> Sitio creado por Ian Alexander Huidobro Castellanos</span>
         </div>
-        <div class="footer-texto">
-            <i class="fas fa-calendar-alt"></i> 2026 · repaso interactivo
-        </div>
+        <div class="footer-texto"><i class="fas fa-calendar-alt"></i> 2026 · repaso interactivo con ranking global</div>
     </div>
 </div>
 
 <script>
-    // Respuestas correctas (variadas)
-    const respuestas = {
-        p1: 'a',
-        p2: 'b',
-        p3: 'b',
-        p4: 'c',
-        p5: 'a',
-        p6: 'b',
-        p7: 'c',
-        p8: 'b'
-    };
+    const API_URL = "https://script.google.com/macros/s/AKfycbwCSeu_XANybAx_6NQz56zzx_0hKFGfKbmcffoiSpGS8QEASS9nuS-lulp-dvYerCbu/exec";
+    const respuestas = { p1: 'a', p2: 'b', p3: 'b', p4: 'c', p5: 'a', p6: 'b', p7: 'c', p8: 'b' };
     const totalPreguntas = Object.keys(respuestas).length;
 
-    // Variables de tiempo
-    let startTime = null;
-    let timerInterval = null;
-    let quizFinalizado = false;
+    let startTime = null, timerInterval = null, quizFinalizado = false;
+    let yaRegistrado = false;
 
-    // Elementos
     const cronoElement = document.getElementById('cronometro');
     const resultadoDiv = document.getElementById('resultado');
     const puntajeDisplay = document.getElementById('puntajeDisplay');
     const tiempoDisplay = document.getElementById('tiempoDisplay');
     const mensajeResultado = document.getElementById('mensajeResultado');
 
-    // Iniciar cronómetro
     function iniciarCronometro() {
         if (timerInterval) clearInterval(timerInterval);
         startTime = Date.now();
-        timerInterval = setInterval(actualizarCronometro, 1000);
-        quizFinalizado = false;
-    }
-
-    function actualizarCronometro() {
-        if (quizFinalizado) return;
-        const elapsed = Math.floor((Date.now() - startTime) / 1000);
-        const minutos = Math.floor(elapsed / 60);
-        const segundos = elapsed % 60;
-        cronoElement.textContent = `${minutos.toString().padStart(2,'0')}:${segundos.toString().padStart(2,'0')}`;
+        timerInterval = setInterval(() => {
+            if (!quizFinalizado) {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const m = Math.floor(elapsed / 60);
+                const s = elapsed % 60;
+                cronoElement.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            }
+        }, 1000);
     }
 
     function detenerCronometro() {
@@ -550,30 +344,22 @@
         timerInterval = null;
     }
 
-    function getTiempoFormateado() {
-        if (!startTime) return "00:00";
-        const elapsed = Math.floor((Date.now() - startTime) / 1000);
-        const minutos = Math.floor(elapsed / 60);
-        const segundos = elapsed % 60;
-        return `${minutos.toString().padStart(2,'0')}:${segundos.toString().padStart(2,'0')}`;
-    }
-
     function getTiempoSegundos() {
-        if (!startTime) return 0;
-        return Math.floor((Date.now() - startTime) / 1000);
+        return startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
     }
 
-    // Mostrar feedback al seleccionar
+    function getTiempoFormateado() {
+        const seg = getTiempoSegundos();
+        const m = Math.floor(seg / 60);
+        const s = seg % 60;
+        return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    }
+
     function seleccionar(preguntaId, valor) {
         if (quizFinalizado) return;
         document.getElementById(preguntaId + valor).checked = true;
-        mostrarFeedback(preguntaId, valor);
-    }
-
-    function mostrarFeedback(preguntaId, valor) {
         let fbDiv = document.getElementById('fb-' + preguntaId);
-        let correcta = respuestas[preguntaId];
-        if (valor === correcta) {
+        if (valor === respuestas[preguntaId]) {
             fbDiv.className = 'feedback correcto';
             fbDiv.innerHTML = '✅ Correcto';
         } else {
@@ -583,77 +369,151 @@
         fbDiv.style.display = 'block';
     }
 
-    // Calcular puntaje
     function calcularPuntaje() {
         let puntaje = 0;
-        for (let pregunta in respuestas) {
-            let radios = document.getElementsByName(pregunta);
-            let seleccionada = null;
-            for (let radio of radios) {
-                if (radio.checked) {
-                    seleccionada = radio.value;
-                    break;
-                }
-            }
-            if (seleccionada && seleccionada === respuestas[pregunta]) {
-                puntaje++;
-            }
-            if (seleccionada) {
-                mostrarFeedback(pregunta, seleccionada);
+        for (let p in respuestas) {
+            let radios = document.getElementsByName(p);
+            let selec = null;
+            for (let r of radios) if (r.checked) { selec = r.value; break; }
+            if (selec && selec === respuestas[p]) puntaje++;
+            if (selec) {
+                let fb = document.getElementById('fb-' + p);
+                fb.className = (selec === respuestas[p]) ? 'feedback correcto' : 'feedback incorrecto';
+                fb.innerHTML = (selec === respuestas[p]) ? '✅ Correcto' : '❌ Incorrecto';
+                fb.style.display = 'block';
             } else {
-                let fbDiv = document.getElementById('fb-' + pregunta);
-                fbDiv.className = 'feedback incorrecto';
-                fbDiv.innerHTML = '⚠️ Sin responder';
-                fbDiv.style.display = 'block';
+                let fb = document.getElementById('fb-' + p);
+                fb.className = 'feedback incorrecto';
+                fb.innerHTML = '⚠️ Sin responder';
+                fb.style.display = 'block';
             }
         }
         return puntaje;
     }
 
-    // Finalizar quiz
-    function finalizarQuiz() {
-        if (quizFinalizado) return;
-        detenerCronometro();
-        quizFinalizado = true;
-        
-        const puntaje = calcularPuntaje();
-        const tiempoFormateado = getTiempoFormateado();
-        const tiempoSegundos = getTiempoSegundos();
-        
-        resultadoDiv.style.display = 'block';
-        puntajeDisplay.innerText = `${puntaje}/${totalPreguntas}`;
-        tiempoDisplay.innerHTML = `<i class="fas fa-stopwatch"></i> Tiempo: ${tiempoFormateado} (${tiempoSegundos} segundos)`;
-        
-        let mensaje = '';
-        if (puntaje === totalPreguntas) {
-            mensaje = '¡Excelente! Dominas todos los temas.';
-        } else if (puntaje >= 6) {
-            mensaje = '¡Muy bien! Repasa los temas que fallaste.';
-        } else {
-            mensaje = 'Sigue practicando, vuelve a intentarlo.';
+    async function cargarRanking() {
+        try {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+            if (!Array.isArray(data)) return;
+            data.sort((a,b) => {
+                if (a.aciertos !== b.aciertos) return b.aciertos - a.aciertos;
+                return a.tiempo - b.tiempo;
+            });
+            const top10 = data.slice(0, 10);
+            const tbody = document.getElementById('rankingBody');
+            if (top10.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5">Aún no hay registros. Sé el primero.</td></tr>';
+                return;
+            }
+            let html = '';
+            top10.forEach((item, idx) => {
+                const fecha = item.timestamp ? new Date(item.timestamp).toLocaleString() : '';
+                html += `<tr>
+                    <td>${idx+1}</td>
+                    <td>${escapeHtml(item.nombre)}</td>
+                    <td>${item.aciertos}/${item.total}</td>
+                    <td>${item.tiempo} s</td>
+                    <td>${fecha}</td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+        } catch(e) {
+            console.error("Error cargando ranking:", e);
+            document.getElementById('rankingBody').innerHTML = '<tr><td colspan="5">Error al cargar ranking</td></tr>';
         }
-        mensajeResultado.innerText = mensaje;
     }
 
-    // Reiniciar todo
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m){
+            if(m==='&') return '&amp;';
+            if(m==='<') return '&lt;';
+            if(m==='>') return '&gt;';
+            return m;
+        });
+    }
+
+    async function verificarNombreExistente(nombre) {
+        try {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+            if (!Array.isArray(data)) return false;
+            return data.some(item => item.nombre && item.nombre.toLowerCase() === nombre.toLowerCase());
+        } catch(e) { return false; }
+    }
+
+    async function finalizarQuiz() {
+        if (quizFinalizado) return;
+
+        const puntaje = calcularPuntaje();
+        const tiempo = getTiempoSegundos();
+
+        let nombre = prompt("Ingresa tu nombre para guardar tu puntaje en el ranking (solo un intento por nombre):");
+        if (!nombre || nombre.trim() === "") {
+            alert("Debes ingresar un nombre para guardar el puntaje.");
+            return;
+        }
+        nombre = nombre.trim();
+
+        const existe = await verificarNombreExistente(nombre);
+        if (existe) {
+            alert(`El nombre "${nombre}" ya está registrado. Solo se permite un intento por persona. Puedes ver tu puntaje en el ranking.`);
+            resultadoDiv.style.display = 'block';
+            puntajeDisplay.innerText = `${puntaje}/${totalPreguntas}`;
+            tiempoDisplay.innerHTML = `<i class="fas fa-stopwatch"></i> Tiempo: ${getTiempoFormateado()} (${tiempo} segundos)`;
+            mensajeResultado.innerText = "Ya hay un registro con este nombre. No se guardó nuevo puntaje.";
+            detenerCronometro();
+            quizFinalizado = true;
+            return;
+        }
+
+        try {
+            await fetch(API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nombre: nombre,
+                    aciertos: puntaje,
+                    total: totalPreguntas,
+                    tiempo: tiempo
+                })
+            });
+        } catch(e) {
+            console.error("Error al guardar:", e);
+            alert("Error de conexión. No se pudo guardar el puntaje.");
+            return;
+        }
+
+        detenerCronometro();
+        quizFinalizado = true;
+
+        resultadoDiv.style.display = 'block';
+        puntajeDisplay.innerText = `${puntaje}/${totalPreguntas}`;
+        tiempoDisplay.innerHTML = `<i class="fas fa-stopwatch"></i> Tiempo: ${getTiempoFormateado()} (${tiempo} segundos)`;
+        let mensaje = (puntaje === totalPreguntas) ? "¡Excelente! Dominas todos los temas." : (puntaje >= 6 ? "¡Muy bien! Repasa los temas que fallaste." : "Sigue practicando, vuelve a intentarlo.");
+        mensajeResultado.innerText = mensaje;
+
+        await cargarRanking();
+    }
+
     function reiniciarQuiz() {
-        // Limpiar radios
-        let radios = document.querySelectorAll('input[type="radio"]');
-        radios.forEach(r => r.checked = false);
-        // Ocultar feedbacks
-        let feedbacks = document.querySelectorAll('.feedback');
-        feedbacks.forEach(f => f.style.display = 'none');
-        // Ocultar resultado
+        if (quizFinalizado) {
+            alert("Ya finalizaste el quiz. Si quieres hacer otro intento, tendrás que usar otro nombre o recargar la página con otro navegador.");
+            return;
+        }
+        document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        document.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
         resultadoDiv.style.display = 'none';
-        // Reiniciar tiempo
         detenerCronometro();
         iniciarCronometro();
         quizFinalizado = false;
     }
 
-    // Inicializar al cargar
     window.onload = () => {
         iniciarCronometro();
+        cargarRanking();
     };
 </script>
 </body>
