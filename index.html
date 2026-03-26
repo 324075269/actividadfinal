@@ -170,9 +170,41 @@
             margin-top: 2rem;
         }
         .ranking-box h3 { font-size: 1.8rem; margin-bottom: 1rem; color: #1e3a5f; }
-        .ranking-table { width: 100%; border-collapse: collapse; }
-        .ranking-table th, .ranking-table td { padding: 0.6rem; text-align: left; border-bottom: 1px solid #cedaea; }
-        .ranking-table th { background: #1e3a5f; color: white; }
+        /* Contenedor para scroll horizontal en móviles */
+        .ranking-table-wrapper {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .ranking-table {
+            width: 100%;
+            min-width: 500px; /* fuerza scroll en pantallas muy pequeñas */
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        .ranking-table th, .ranking-table td {
+            padding: 0.8rem 0.6rem;
+            text-align: left;
+            border-bottom: 1px solid #cedaea;
+            white-space: nowrap;
+        }
+        .ranking-table th {
+            background: #1e3a5f;
+            color: white;
+            font-weight: 600;
+        }
+        /* Ajustes para móviles */
+        @media (max-width: 600px) {
+            .ranking-table {
+                font-size: 0.85rem;
+                min-width: 480px;
+            }
+            .ranking-table th, .ranking-table td {
+                padding: 0.6rem 0.4rem;
+            }
+            .ranking-box h3 {
+                font-size: 1.5rem;
+            }
+        }
         .footer-enp2 {
             margin-top: 2rem;
             border-top: 3px solid #b5c7dd;
@@ -315,10 +347,16 @@
 
     <div class="ranking-box">
         <h3><i class="fas fa-trophy"></i> Ranking · Mejores puntajes (por aciertos y tiempo)</h3>
-        <table class="ranking-table" id="rankingTabla">
-            <thead><tr><th>Posición</th><th>Nombre</th><th>Aciertos / 8</th><th>Tiempo (s)</th><th>Fecha</th></thead>
-            <tbody id="rankingBody"> <td colspan="5">Cargando ranking...</td> </tbody>
-        </table>
+        <div class="ranking-table-wrapper">
+            <table class="ranking-table" id="rankingTabla">
+                <thead>
+                    <tr><th>Posición</th><th>Nombre</th><th>Aciertos / 8</th><th>Tiempo (s)</th><th>Fecha</th></tr>
+                </thead>
+                <tbody id="rankingBody">
+                    <tr><td colspan="5">Cargando ranking...</td></tr>
+                </tbody>
+            </table>
+        </div>
         <p style="font-size:0.9rem; margin-top:1rem;">* Solo un intento por nombre. Si ya aparece tu nombre, no podrás registrar otro.</p>
     </div>
 
@@ -332,14 +370,13 @@
 </div>
 
 <script>
-    // URL del Apps Script (ya proporcionada)
+    // URL del Apps Script
     const API_URL = "https://script.google.com/macros/s/AKfycbwCSeu_XANybAx_6NQz56zzx_0hKFGfKbmcffoiSpGS8QEASS9nuS-lulp-dvYerCbu/exec";
     // Respuestas correctas
     const respuestas = { p1: 'a', p2: 'b', p3: 'b', p4: 'c', p5: 'a', p6: 'b', p7: 'c', p8: 'b' };
     const totalPreguntas = Object.keys(respuestas).length;
 
     let startTime = null, timerInterval = null, quizFinalizado = false;
-    // Para controlar si cada pregunta ya fue respondida (bloqueada)
     let preguntasRespondidas = {};
 
     const cronoElement = document.getElementById('cronometro');
@@ -348,11 +385,9 @@
     const tiempoDisplay = document.getElementById('tiempoDisplay');
     const mensajeResultado = document.getElementById('mensajeResultado');
 
-    // Bloquear una pregunta específica (deshabilitar todos los radios de esa pregunta)
     function bloquearPregunta(preguntaId) {
-        if (preguntasRespondidas[preguntaId]) return; // ya bloqueada
+        if (preguntasRespondidas[preguntaId]) return;
         preguntasRespondidas[preguntaId] = true;
-
         const contenedor = document.getElementById(`opciones-${preguntaId}`);
         if (!contenedor) return;
         const opciones = contenedor.querySelectorAll('.opcion');
@@ -361,24 +396,16 @@
             const radio = op.querySelector('input[type="radio"]');
             if (radio) radio.disabled = true;
         });
-        // Opcional: cambiar apariencia de la tarjeta
         const tarjeta = document.getElementById(preguntaId);
         if (tarjeta) tarjeta.classList.add('bloqueada');
     }
 
-    // Manejar selección de respuesta con bloqueo inmediato
     function manejarSeleccion(preguntaId, valor) {
-        if (preguntasRespondidas[preguntaId]) return; // ya respondió
+        if (preguntasRespondidas[preguntaId]) return;
         if (quizFinalizado) return;
-
-        // Marcar el radio correspondiente
         const radio = document.getElementById(preguntaId + valor);
         if (radio) radio.checked = true;
-
-        // Bloquear la pregunta para futuros cambios
         bloquearPregunta(preguntaId);
-
-        // Mostrar feedback
         let fbDiv = document.getElementById('fb-' + preguntaId);
         if (valor === respuestas[preguntaId]) {
             fbDiv.className = 'feedback correcto';
@@ -390,7 +417,6 @@
         fbDiv.style.display = 'block';
     }
 
-    // Configurar eventos para cada opción (usamos delegación por si dinámico)
     function inicializarEventos() {
         for (let i = 1; i <= totalPreguntas; i++) {
             const preguntaId = `p${i}`;
@@ -399,7 +425,6 @@
             opcionesDiv.querySelectorAll('.opcion').forEach(op => {
                 const valor = op.getAttribute('data-valor');
                 if (!valor) return;
-                // Reemplazar el onclick inline con event listener para mayor control
                 op.removeAttribute('onclick');
                 op.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -407,7 +432,6 @@
                         manejarSeleccion(preguntaId, valor);
                     }
                 });
-                // También manejar click directo en radio
                 const radio = op.querySelector('input[type="radio"]');
                 if (radio) {
                     radio.addEventListener('click', (e) => {
@@ -421,7 +445,6 @@
         }
     }
 
-    // Cronómetro
     function iniciarCronometro() {
         if (timerInterval) clearInterval(timerInterval);
         startTime = Date.now();
@@ -451,15 +474,24 @@
         return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
     }
 
-    // Calcular puntaje basado en respuestas ya guardadas
     function calcularPuntaje() {
         let puntaje = 0;
         for (let p in respuestas) {
-            // Buscar radio seleccionado que esté marcado y no deshabilitado? pero está bloqueado.
             const radios = document.getElementsByName(p);
             let selec = null;
             for (let r of radios) if (r.checked) { selec = r.value; break; }
             if (selec && selec === respuestas[p]) puntaje++;
+            if (selec) {
+                let fb = document.getElementById('fb-' + p);
+                fb.className = (selec === respuestas[p]) ? 'feedback correcto' : 'feedback incorrecto';
+                fb.innerHTML = (selec === respuestas[p]) ? '✅ Correcto' : '❌ Incorrecto';
+                fb.style.display = 'block';
+            } else {
+                let fb = document.getElementById('fb-' + p);
+                fb.className = 'feedback incorrecto';
+                fb.innerHTML = '⚠️ Sin responder';
+                fb.style.display = 'block';
+            }
         }
         return puntaje;
     }
@@ -518,17 +550,14 @@
 
     async function finalizarQuiz() {
         if (quizFinalizado) return;
-
         const puntaje = calcularPuntaje();
         const tiempo = getTiempoSegundos();
-
         let nombre = prompt("Ingresa tu nombre para guardar tu puntaje en el ranking (solo un intento por nombre):");
         if (!nombre || nombre.trim() === "") {
             alert("Debes ingresar un nombre para guardar el puntaje.");
             return;
         }
         nombre = nombre.trim();
-
         const existe = await verificarNombreExistente(nombre);
         if (existe) {
             alert(`El nombre "${nombre}" ya está registrado. Solo se permite un intento por persona. Puedes ver tu puntaje en el ranking.`);
@@ -540,7 +569,6 @@
             quizFinalizado = true;
             return;
         }
-
         try {
             await fetch(API_URL, {
                 method: 'POST',
@@ -558,16 +586,13 @@
             alert("Error de conexión. No se pudo guardar el puntaje.");
             return;
         }
-
         detenerCronometro();
         quizFinalizado = true;
-
         resultadoDiv.style.display = 'block';
         puntajeDisplay.innerText = `${puntaje}/${totalPreguntas}`;
         tiempoDisplay.innerHTML = `<i class="fas fa-stopwatch"></i> Tiempo: ${getTiempoFormateado()} (${tiempo} segundos)`;
         let mensaje = (puntaje === totalPreguntas) ? "¡Excelente! Dominas todos los temas." : (puntaje >= 6 ? "¡Muy bien! Repasa los temas que fallaste." : "Sigue practicando, vuelve a intentarlo.");
         mensajeResultado.innerText = mensaje;
-
         await cargarRanking();
     }
 
@@ -576,14 +601,11 @@
             alert("Ya finalizaste el quiz. Si quieres hacer otro intento, tendrás que usar otro nombre o recargar la página con otro navegador.");
             return;
         }
-        // Desmarcar todos los radios
         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-        // Limpiar feedbacks
         document.querySelectorAll('.feedback').forEach(f => {
             f.className = 'feedback';
             f.style.display = 'none';
         });
-        // Desbloquear preguntas (resetear estado)
         for (let i = 1; i <= totalPreguntas; i++) {
             const preguntaId = `p${i}`;
             preguntasRespondidas[preguntaId] = false;
